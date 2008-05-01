@@ -1,0 +1,10 @@
+C:\Users\zac\Documents\Visual Studio 2008\Projects\CSS Merge\CSS Merge\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\zac\Documents\Visual Studio 2008\Projects\CSS Merge\CSS Merge\obj\Debug\CSS_Merge.FormMain.resources
+C:\Users\zac\Documents\Visual Studio 2008\Projects\CSS Merge\CSS Merge\obj\Debug\CSS_Merge.Properties.Resources.resources
+C:\Users\zac\Documents\Visual Studio 2008\Projects\CSS Merge\CSS Merge\obj\Debug\CSS Merge.csproj.GenerateResource.Cache
+C:\Users\zac\Documents\Visual Studio 2008\Projects\CSS Merge\CSS Merge\bin\Debug\CSS Merge.exe
+C:\Users\zac\Documents\Visual Studio 2008\Projects\CSS Merge\CSS Merge\bin\Debug\CSS Merge.pdb
+C:\Users\zac\Documents\Visual Studio 2008\Projects\CSS Merge\CSS Merge\obj\Debug\CSS Merge.exe
+C:\Users\zac\Documents\Visual Studio 2008\Projects\CSS Merge\CSS Merge\obj\Debug\CSS Merge.pdb
+C:\Users\zac\Documents\Visual Studio 2008\Projects\CSS Merge\CSS Merge\bin\Debug\CSS Merge.exe.config
+C:\Users\zac\Documents\Visual Studio 2008\Projects\CSS Merge\CSS Merge\obj\Debug\CSS_Merge.FormConflictResolution.resources
