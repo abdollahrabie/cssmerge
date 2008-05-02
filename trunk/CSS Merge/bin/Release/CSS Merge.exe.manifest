@@ -53,24 +53,24 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="CSS Merge.exe" size="38912">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="CSS Merge.exe" size="39424">
       <assemblyIdentity name="CSS Merge" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>3cUWCP/p5sN1TIPzm7QdVCgt4qo=</dsig:DigestValue>
+        <dsig:DigestValue>/qot4Lp7xe48ir0tgjOhX0/CsVA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="CSS Merge.exe.config" size="926">
+  <file name="CSS Merge.exe.config" size="856">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>DhUh08d9IgD6J1R/ZalscdIJsAQ=</dsig:DigestValue>
+      <dsig:DigestValue>nrbeo9uHBTBj1qauE1KCIELJjiI=</dsig:DigestValue>
     </hash>
   </file>
   <file name="merge.ico" size="2550">
