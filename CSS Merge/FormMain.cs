@@ -11,195 +11,197 @@ namespace CSS_Merge
         {
             InitializeComponent();
 
-			// Get from user-level settings
-			cboSorting.SelectedIndex = (int)Properties.Settings.Default["sort"];
-			chkOptimize.Checked = (bool)Properties.Settings.Default["optimize"];
+            // Get from user-level settings
+            cboSorting.SelectedIndex = (int)Properties.Settings.Default["sort"];
+            chkOptimize.Checked = (bool)Properties.Settings.Default["optimize"];
 
-			// Add any files supplied from command-line arguments
-			foreach (string argument in Environment.GetCommandLineArgs())
-			{
-				FileInfo fi = new FileInfo(argument);
-				if (fi.Exists && fi.Extension.ToLower() == ".css")
-					AddFile(argument);
-			}
+            // Add any files supplied from command-line arguments
+            foreach (string argument in Environment.GetCommandLineArgs())
+            {
+                FileInfo fileInfo = new FileInfo(argument);
+                if (fileInfo.Exists && fileInfo.Extension.ToLower() == ".css")
+                    AddFile(argument);
+            }
         }
 
-		private void listViewFiles_DragEnter(object sender, DragEventArgs e)
-		{
-			if (GetDropFilenames(e) != null)
-				e.Effect = DragDropEffects.Move;
-			else
-				e.Effect = DragDropEffects.None;
-		}
-		private void listViewFiles_DragDrop(object sender, DragEventArgs e)
-		{
-			string[] filenames = GetDropFilenames(e);
+        private void listViewFiles_DragEnter(object sender, DragEventArgs dragEventArgs)
+        {
+            if (GetDropFilenames(dragEventArgs) != null)
+                dragEventArgs.Effect = DragDropEffects.Move;
+            else
+                dragEventArgs.Effect = DragDropEffects.None;
+        }
+        private void listViewFiles_DragDrop(object sender, DragEventArgs dragEventArgs)
+        {
+            string[] filenames = GetDropFilenames(dragEventArgs);
 
-			if (filenames == null)
-				return;
+            if (filenames == null)
+                return;
 
-			foreach (string filename in filenames)
-				AddFile(filename);
-		}
-		private string[] GetDropFilenames(DragEventArgs e)
-		{
-			if (!e.Data.GetDataPresent(DataFormats.FileDrop))
-				return null;
+            foreach (string filename in filenames)
+                AddFile(filename);
+        }
+        private string[] GetDropFilenames(DragEventArgs dragEventArgs)
+        {
+            if (!dragEventArgs.Data.GetDataPresent(DataFormats.FileDrop))
+                return null;
 
-			string[] filenames = (string[])e.Data.GetData("FileDrop");
+            string[] filenames = (string[])dragEventArgs.Data.GetData("FileDrop");
 
-			foreach (string filename in filenames)
-			{
-				if (!filename.ToLower().EndsWith(".css"))
-					return null;
-			}
+            foreach (string filename in filenames)
+            {
+                if (!filename.ToLower().EndsWith(".css"))
+                    return null;
+            }
 
-			return filenames;
-		}
+            return filenames;
+        }
 
-		private void AddFile(string filename)
-		{
-			// Add a file to the drag-drop list. This can be
-			// called from drag-drop, Add file button or
-			// command-line arguments
+        private void AddFile(string filename)
+        {
+            // Add a file to the drag-drop list. This can be
+            // called from drag-drop, Add file button or
+            // command-line arguments
 
-			bool alreadyAdded = false;
-			foreach (ListViewItem lvi in listViewFiles.Items)
-			{
-				if ((string)lvi.Tag == filename)
-					alreadyAdded = true;
-			}
+            bool alreadyAdded = false;
+            foreach (ListViewItem listViewItem in listViewFiles.Items)
+            {
+                if ((string)listViewItem.Tag == filename)
+                    alreadyAdded = true;
+            }
 
-			if (alreadyAdded)
-				return;
+            if (alreadyAdded)
+                return;
 
-			FileInfo fi = new FileInfo(filename);
-			ListViewItem lviNew = new ListViewItem(fi.Name, 0);
-			lviNew.Tag = filename;
-			listViewFiles.Items.Add(lviNew);
+            FileInfo fileInfo = new FileInfo(filename);
+            ListViewItem listViewItemToAdd = new ListViewItem(fileInfo.Name, 0);
+            listViewItemToAdd.Tag = filename;
+            listViewFiles.Items.Add(listViewItemToAdd);
 
-			lblDragDrop.Visible = (listViewFiles.Items.Count == 0);
-		}
+            lblDragDrop.Visible = (listViewFiles.Items.Count == 0);
+        }
 
-		private void cboSorting_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			Properties.Settings.Default["sort"] = cboSorting.SelectedIndex;
-			Properties.Settings.Default.Save();
-		}
-		private void chkOptimize_CheckedChanged(object sender, EventArgs e)
-		{
-			Properties.Settings.Default["optimize"] = chkOptimize.Checked;
-			Properties.Settings.Default.Save();
-		}
+        private void cboSorting_SelectedIndexChanged(object sender, EventArgs eventArgs)
+        {
+            Properties.Settings.Default["sort"] = cboSorting.SelectedIndex;
+            Properties.Settings.Default.Save();
+        }
+        private void chkOptimize_CheckedChanged(object sender, EventArgs eventArgs)
+        {
+            Properties.Settings.Default["optimize"] = chkOptimize.Checked;
+            Properties.Settings.Default.Save();
+        }
 
-		private void btnAdd_Click(object sender, EventArgs e)
-		{
-			DialogResult res = openFileDialog.ShowDialog();
-			
-			if (res == DialogResult.OK)
-			{
-				foreach (string filename in openFileDialog.FileNames)
-					AddFile(filename);
-			}
-		}
-		private void btnRemove_Click(object sender, EventArgs e)
-		{
-			if (listViewFiles.SelectedItems.Count == 0)
-			{
-				MessageBox.Show("To remove files from the list, select files and click Remove.",
-					this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
-				return;
-			}
+        private void btnAdd_Click(object sender, EventArgs eventArgs)
+        {
+            DialogResult dialogResult = openFileDialog.ShowDialog();
 
-			ListViewItem[] selected = new ListViewItem[listViewFiles.SelectedItems.Count];
-			listViewFiles.SelectedItems.CopyTo(selected, 0);
+            if (dialogResult == DialogResult.OK)
+            {
+                foreach (string filename in openFileDialog.FileNames)
+                    AddFile(filename);
+            }
+        }
 
-			foreach (ListViewItem lvi in selected)
-				listViewFiles.Items.Remove(lvi);
+        private void btnRemove_Click(object sender, EventArgs eventArgs)
+        {
+            if (listViewFiles.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("To remove files from the list, select files and click Remove.",
+                    this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
-			lblDragDrop.Visible = (listViewFiles.Items.Count == 0);
-		}
-		private void listViewFiles_KeyDown(object sender, KeyEventArgs e)
-		{
-			if (e.KeyCode == Keys.Delete && listViewFiles.SelectedItems.Count > 0)
-				btnRemove_Click(this, e);
-		}
+            ListViewItem[] selectedListViewItem = new ListViewItem[listViewFiles.SelectedItems.Count];
+            listViewFiles.SelectedItems.CopyTo(selectedListViewItem, 0);
 
-		private void btnMerge_Click(object sender, EventArgs e)
-		{
-			if (listViewFiles.Items.Count == 0)
-			{
-				MessageBox.Show("To merge CSS files, add one or more CSS files to the list and click Merge.",
-					this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
-				return;
-			}
+            foreach (ListViewItem listViewItem in selectedListViewItem)
+                listViewFiles.Items.Remove(listViewItem);
 
-			List<CssFile> cssFiles = new List<CssFile>();
+            lblDragDrop.Visible = (listViewFiles.Items.Count == 0);
+        }
 
-			foreach (ListViewItem lvi in listViewFiles.Items)
-			{
-				string filename = (string)lvi.Tag;
+        private void listViewFiles_KeyDown(object sender, KeyEventArgs keyEventArgs)
+        {
+            if (keyEventArgs.KeyCode == Keys.Delete && listViewFiles.SelectedItems.Count > 0)
+                btnRemove_Click(this, keyEventArgs);
+        }
 
-				try
-				{
-					cssFiles.Add(CssIO.ReadFile(filename));
+        private void btnMerge_Click(object sender, EventArgs eventArgs)
+        {
+            if (listViewFiles.Items.Count == 0)
+            {
+                MessageBox.Show("To merge CSS files, add one or more CSS files to the list and click Merge.",
+                    this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
-				}
-				catch (Exception ex)
-				{
-					MessageBox.Show("Aborting - an error occured while interpreting file '" + filename
-						+ "':\r\n\r\n" + ex.Message,
-						this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-					return;
-				}
-			}
+            List<CssFile> cssFiles = new List<CssFile>();
 
-			CssConflict[] conflicts = CssConflict.GetConflictSet(cssFiles.ToArray());
+            foreach (ListViewItem listViewItem in listViewFiles.Items)
+            {
+                string filename = (string)listViewItem.Tag;
 
-			bool resolveConflicts = false;
-			foreach (CssConflict conflict in conflicts)
-			{
-				// Only need to go to conflict resolution if
-				// any one class appeared in more than one file
+                try
+                {
+                    cssFiles.Add(CssIO.ReadFile(filename));
 
-				if (conflict.CssClasses.Length > 1)
-				{
-					resolveConflicts = true;
-					break;
-				}
-			}
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Aborting - an error occured while interpreting file '" + filename
+                        + "':\r\n\r\n" + ex.Message,
+                        this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+            }
 
-			DialogResult res = DialogResult.OK;
+            CssConflict[] conflicts = CssConflict.GetConflictSet(cssFiles.ToArray());
 
-			if (resolveConflicts)
-			{
-				FormConflictResolution frm = new FormConflictResolution();
-				frm.Conflicts = conflicts;
-				res = frm.ShowDialog(this);
-			}
+            bool conflictsToResolve = false;
+            foreach (CssConflict conflict in conflicts)
+            {
+                // Only need to go to conflict resolution if
+                // any one class appeared in more than one file
 
-			if (res == DialogResult.OK)
-			{
-				CssClass[] mergedClasses = CssConflict.GetMergedClassSet(conflicts);
+                if (conflict.CssClasses.Length > 1)
+                {
+                    conflictsToResolve = true;
+                    break;
+                }
+            }
 
-				res = saveFileDialog.ShowDialog(this);
+            DialogResult dialogResult = DialogResult.OK;
 
-				if (res == DialogResult.OK)
-				{
-					CssFile cssFile = new CssFile(saveFileDialog.FileName);
-					cssFile.CssClasses.AddRange(mergedClasses);
+            if (conflictsToResolve)
+            {
+                FormConflictResolution conflictResolutionForm = new FormConflictResolution();
+                conflictResolutionForm.Conflicts = conflicts;
+                dialogResult = conflictResolutionForm.ShowDialog(this);
+            }
 
-					if (cboSorting.SelectedIndex == 0)
-						cssFile.Sort(Sorting.ByTypeThenName);
-					else
-						cssFile.Sort(Sorting.ByName);
-					
-					CssIO.WriteFile(cssFile, (chkOptimize.Checked ? Formatting.Optimized : Formatting.Readable));
+            if (dialogResult == DialogResult.OK)
+            {
+                CssClass[] mergedClasses = CssConflict.GetMergedClassSet(conflicts);
 
-					MessageBox.Show("Merged CSS file saved to '" + saveFileDialog.FileName + "'.",
-						this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
-				}
-			}
-		}
+                dialogResult = saveFileDialog.ShowDialog(this);
+
+                if (dialogResult == DialogResult.OK)
+                {
+                    CssFile cssFile = new CssFile(saveFileDialog.FileName);
+                    cssFile.CssClasses.AddRange(mergedClasses);
+
+                    if (cboSorting.SelectedIndex == 0)
+                        cssFile.Sort(Sorting.ByTypeThenName);
+                    else
+                        cssFile.Sort(Sorting.ByName);
+
+                    CssIO.WriteFile(cssFile, (chkOptimize.Checked ? Formatting.Optimized : Formatting.Readable));
+
+                    MessageBox.Show("Merged CSS file saved to '" + saveFileDialog.FileName + "'.",
+                        this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
     }
 }
